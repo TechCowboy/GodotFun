@@ -1,8 +1,16 @@
-[gd_scene load_steps=55 format=3 uid="uid://im1c3eueumow"]
+[gd_scene load_steps=63 format=3 uid="uid://im1c3eueumow"]
 
 [ext_resource type="Texture2D" uid="uid://csjpdqpv6ddu4" path="res://models/3DGodotRobot_GodotPalette.png" id="1_416fi"]
+[ext_resource type="Script" path="res://robot.gd" id="1_b2mf1"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="1_p3ien"]
 [ext_resource type="Script" path="res://Unity.gd" id="2_1wg40"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_pqpa2"]
 [ext_resource type="Script" path="res://Player.gd" id="3_gxgsl"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_jxopt"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_hrl4t"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_u6loo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1vv8x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_na7ym"]
 resource_name = "Material"
@@ -4570,12 +4578,63 @@ volumetric_fog_enabled = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bbp47"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_p2w47"]
+
 [node name="Main" type="Node3D"]
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("1_p3ien")]
+offset_left = 694.0
+initial_node_to_watch = NodePath("../Robot/StateChart")
 
 [node name="Robot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32077, -9.53674e-07, -1.79287)
+script = ExtResource("1_b2mf1")
+
+[node name="StateChart" type="Node" parent="Robot"]
+script = ExtResource("2_pqpa2")
+
+[node name="Root" type="Node" parent="Robot/StateChart"]
+script = ExtResource("3_jxopt")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Robot/StateChart/Root"]
+script = ExtResource("4_hrl4t")
+
+[node name="To Walking" type="Node" parent="Robot/StateChart/Root/Idle"]
+script = ExtResource("5_u6loo")
+to = NodePath("../../Walking")
+delay_seconds = 1.0
+
+[node name="Walking" type="Node" parent="Robot/StateChart/Root"]
+script = ExtResource("4_hrl4t")
+
+[node name="To Wave" type="Node" parent="Robot/StateChart/Root/Walking"]
+script = ExtResource("5_u6loo")
+to = NodePath("../../Wave")
+event = &"noticed_unity"
+
+[node name="Wave" type="Node" parent="Robot/StateChart/Root"]
+script = ExtResource("4_hrl4t")
+
+[node name="To Unity Attack" type="Node" parent="Robot/StateChart/Root/Wave"]
+script = ExtResource("5_u6loo")
+to = NodePath("../../Unity Attack")
+delay_seconds = 1.0
+
+[node name="Unity Attack" type="Node" parent="Robot/StateChart/Root"]
+script = ExtResource("4_hrl4t")
+
+[node name="Robot Attack" type="Node" parent="Robot/StateChart/Root"]
+script = ExtResource("4_hrl4t")
 
 [node name="3DGodotRobot" type="Node3D" parent="Robot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.404)
+
+[node name="Area3D" type="Area3D" parent="Robot/3DGodotRobot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/3DGodotRobot/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1vv8x")
 
 [node name="RobotArmature" type="Node3D" parent="Robot/3DGodotRobot"]
 transform = Transform3D(0.578472, 0, 0, 0, 0.578472, 0, 0, 0, 0.578472, 0, 0, 0)
@@ -4783,7 +4842,7 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Unity" type="Node3D" parent="."]
-transform = Transform3D(0.836516, -0.524519, -0.158494, 0.5, 0.612372, 0.612372, -0.224144, -0.591506, 0.774519, 0, 2.04009, -0.121509)
+transform = Transform3D(0.836516, -0.524519, -0.158494, 0.5, 0.612372, 0.612372, -0.224144, -0.591506, 0.774519, 0, 1.04009, -0.121509)
 script = ExtResource("2_1wg40")
 
 [node name="bar1" type="MeshInstance3D" parent="Unity"]
@@ -4940,3 +4999,18 @@ shape = SubResource("CapsuleShape3D_bbp47")
 
 [node name="Camera3D" type="Camera3D" parent="FPCharacter/Player"]
 transform = Transform3D(1, 0, 0, 0, 0.911805, 0.410623, 0, -0.410623, 0.911805, 0, 1.12105, 2.16801)
+
+[node name="TurningPoint" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TurningPoint"]
+shape = SubResource("CylinderShape3D_p2w47")
+
+[connection signal="state_entered" from="Robot/StateChart/Root/Idle" to="Robot" method="_on_idle_state_entered"]
+[connection signal="state_entered" from="Robot/StateChart/Root/Walking" to="Robot" method="_on_walking_state_entered"]
+[connection signal="state_physics_processing" from="Robot/StateChart/Root/Walking" to="Robot" method="_on_walking_state_physics_processing"]
+[connection signal="state_entered" from="Robot/StateChart/Root/Wave" to="Robot" method="_on_turning_state_entered"]
+[connection signal="state_entered" from="Robot/StateChart/Root/Unity Attack" to="Robot" method="_on_unity_attack_state_entered"]
+[connection signal="state_physics_processing" from="Robot/StateChart/Root/Unity Attack" to="Robot" method="_on_unity_attack_state_physics_processing"]
+[connection signal="area_entered" from="TurningPoint" to="Robot" method="_on_turning_point_area_entered"]
+[connection signal="body_entered" from="TurningPoint" to="Robot" method="_on_turning_point_body_entered"]
