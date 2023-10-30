@@ -1,6 +1,5 @@
-[gd_scene load_steps=63 format=3 uid="uid://im1c3eueumow"]
+[gd_scene load_steps=62 format=3 uid="uid://im1c3eueumow"]
 
-[ext_resource type="Texture2D" uid="uid://csjpdqpv6ddu4" path="res://models/3DGodotRobot_GodotPalette.png" id="1_416fi"]
 [ext_resource type="Script" path="res://robot.gd" id="1_b2mf1"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="1_p3ien"]
 [ext_resource type="Script" path="res://Unity.gd" id="2_1wg40"]
@@ -16,7 +15,6 @@
 resource_name = "Material"
 cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_416fi")
 roughness = 0.4
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qhi1g"]
