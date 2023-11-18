@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxo5158l65l38"]
+
+[ext_resource type="PackedScene" uid="uid://haa0x4touaqt" path="res://Scenes/main.tscn" id="1_7uxnr"]
+
+[node name="Camera" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.987442, -0.0347742, 0.154109, -0.0145137, 0.951382, 0.307672, -0.157316, -0.306045, 0.938929, -1.47866, 4.7647, 10.1708)
+current = true
+
+[node name="main" parent="." instance=ExtResource("1_7uxnr")]
+transform = Transform3D(0.999884, 0.0152536, 0, -0.0152536, 0.999884, 0, 0, 0, 1, -1, 1.60048, 8)

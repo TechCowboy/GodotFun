@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://die6omstyp4b7"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_nn7m5"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasGroup"]
+offset_right = 1083.0
+offset_bottom = 72.0
+text = "Unity Fun"
+
+[node name="CheckButton" type="CheckButton" parent="CanvasGroup"]
+offset_left = 207.0
+offset_top = 66.0
+offset_right = 324.0
+offset_bottom = 97.0
+toggle_mode = false
+text = "VR Mode"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasGroup"]
+offset_left = 161.0
+offset_top = 109.0
+offset_right = 625.0
+offset_bottom = 440.0
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_nn7m5")

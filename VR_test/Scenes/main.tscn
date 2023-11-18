@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://uexvptm5u7dn"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_ixde2"]
+[ext_resource type="PackedScene" uid="uid://blvhlkdtwpuh7" path="res://Scenes/xr_origin.tscn" id="2_e57iv"]
+[ext_resource type="PackedScene" uid="uid://dbuvc218f0leb" path="res://Scenes/cube.tscn" id="3_1lqg4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_itgv7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_g8muo"]
+sky_material = SubResource("ProceduralSkyMaterial_itgv7")
+
+[sub_resource type="Environment" id="Environment_6ku6s"]
+background_mode = 2
+sky = SubResource("Sky_g8muo")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nx2h"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mlhfl"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_653ih"]
+albedo_color = Color(0.588235, 0.588235, 0.784314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nakah"]
+material = SubResource("StandardMaterial3D_653ih")
+size = Vector3(1, 0.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2a4yh"]
+size = Vector3(1, 0.5, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_ixde2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6ku6s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_3nx2h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mlhfl")
+
+[node name="XROrigin3D" parent="." instance=ExtResource("2_e57iv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="Table" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -1)
+mesh = SubResource("BoxMesh_nakah")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Table"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table/StaticBody3D"]
+shape = SubResource("BoxShape3D_2a4yh")
+
+[node name="PickableObject" parent="." instance=ExtResource("3_1lqg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00112599, 0.66972, -0.926201)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm5m2psaxtd1a"]
+
+[ext_resource type="Script" path="res://Scenes/vr.gd" id="1_6euck"]
+[ext_resource type="PackedScene" uid="uid://haa0x4touaqt" path="res://Scenes/main.tscn" id="2_lmlah"]
+
+[node name="VR" type="Node3D"]
+script = ExtResource("1_6euck")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="left_hand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+tracker = &"left_hand"
+
+[node name="right_hand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"
+
+[node name="main" parent="." instance=ExtResource("2_lmlah")]

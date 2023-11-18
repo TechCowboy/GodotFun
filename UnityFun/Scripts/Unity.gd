@@ -14,10 +14,3 @@ func _physics_process(delta):
 
 	
 
-
-func _on_area_3d_body_entered(body):
-	print("Unity attacked: Area Entered 1")
-	$"3DGodotRobot/AnimationPlayer".play("Hurt")
-	unity_attacked = true
-	global_position.x += 0.1
-	$StateChart.send_event("robot_attack")
