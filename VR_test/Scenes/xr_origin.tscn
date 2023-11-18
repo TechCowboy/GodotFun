@@ -8,7 +8,7 @@
 
 [node name="XRCamera3D" type="XRCamera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
-fov = 179.0
+fov = 70.0
 
 [node name="LeftHand" type="XRController3D" parent="."]
 tracker = &"left_hand"

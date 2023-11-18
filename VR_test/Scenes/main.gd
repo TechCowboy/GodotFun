@@ -10,7 +10,7 @@ func _ready():
 		
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		
-		get_viewport().usr_xr = true
+		get_viewport().use_xr = true
 		
 	else:
 		print("OpenXR not initialized.")

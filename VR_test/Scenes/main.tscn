@@ -27,10 +27,8 @@ albedo_color = Color(0.588235, 0.588235, 0.784314, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nakah"]
 material = SubResource("StandardMaterial3D_653ih")
-size = Vector3(1, 0.5, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2a4yh"]
-size = Vector3(1, 0.5, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ixde2")
@@ -63,4 +61,4 @@ mesh = SubResource("BoxMesh_nakah")
 shape = SubResource("BoxShape3D_2a4yh")
 
 [node name="PickableObject" parent="." instance=ExtResource("3_1lqg4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00112599, 0.66972, -0.926201)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.443494, 0.387443, 0.685557)
