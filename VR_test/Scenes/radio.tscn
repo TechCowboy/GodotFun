@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddt3fuvlt618k"]
+
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_gg2sr"]
+[ext_resource type="AudioStream" uid="uid://dfd3cxgvqdmcf" path="res://Audio/piano.wav" id="1_unnnf"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/audio/pickable_audio.gd" id="2_h8cms"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/audio/pickable_audio_type.gd" id="3_ck0d4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7rklo"]
+size = Vector3(0.5, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_osq00"]
+size = Vector3(0.5, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3lri"]
+albedo_color = Color(0.615686, 0.32549, 0.270588, 1)
+metallic = 1.0
+metallic_specular = 0.8
+roughness = 0.28
+
+[sub_resource type="Resource" id="Resource_xdugb"]
+script = ExtResource("3_ck0d4")
+name = "audio1"
+
+[node name="Radio" type="Node3D"]
+
+[node name="XRToolsPickable" type="RigidBody3D" parent="."]
+script = ExtResource("1_gg2sr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRToolsPickable"]
+shape = SubResource("BoxShape3D_7rklo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XRToolsPickable"]
+mesh = SubResource("BoxMesh_osq00")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_e3lri")
+
+[node name="XRToolsPickableAudio" type="AudioStreamPlayer3D" parent="XRToolsPickable"]
+stream = ExtResource("1_unnnf")
+autoplay = true
+max_distance = 3.0
+script = ExtResource("2_h8cms")
+pickable_audio_type = SubResource("Resource_xdugb")

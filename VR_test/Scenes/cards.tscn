@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm5amacjdjubs"]
+
+[ext_resource type="PackedScene" uid="uid://cwe2lylvxmq64" path="res://Assets/deck_of_cards.gltf" id="1_ot8fb"]
+
+[node name="deck_of_cards" instance=ExtResource("1_ot8fb")]
